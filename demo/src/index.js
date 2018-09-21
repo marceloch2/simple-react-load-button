@@ -1,15 +1,34 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from 'react'
+import { render } from 'react-dom'
 
-import Example from '../../src'
+import LoadingButton from '../../src'
 
 class Demo extends Component {
-  render() {
-    return <div>
-      <h1>react-loading-button Demo</h1>
-      <Example/>
-    </div>
-  }
+	state = { loading: false }
+
+	handleToggleLoading = () => {
+		this.setState({ loading: !this.state.loading })
+	}
+
+	render() {
+		return (
+			<div>
+				<h1>react-loading-button Demo</h1>
+
+				<h2>Static</h2>
+				<LoadingButton>Load</LoadingButton>
+				<LoadingButton loading>Loading</LoadingButton>
+
+				<h2>Dynamic</h2>
+				<LoadingButton loading={this.state.loading} children={LoadingButton}>
+					{this.state.loading ? 'Loading' : 'Load'}
+				</LoadingButton>
+				<button type="button" onClick={this.handleToggleLoading}>
+					Toggle Loading
+				</button>
+			</div>
+		)
+	}
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))
